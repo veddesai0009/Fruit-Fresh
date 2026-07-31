@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="card">
+
+        <div class="card-header">
+            <h3 class="card-title">
+                Fruit List
+            </h3>
+
+            <a href="/add-fruit" class="btn btn-success float-right">
+                <i class="fas fa-plus"></i> Add Fruit
+            </a>
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-bordered table-striped mb-0">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Fruit Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th width="180">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="fruitTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+fetch("/api/fruits")
+.then(response => response.json())
+.then(fruits => {
+
+    let table = "";
+
+    fruits.forEach(fruit => {
+
+        table += `
+            <tr>
+                <td>${fruit.id}</td>
+                <td>${fruit.fruit_name}</td>
+                <td>₹${fruit.price}</td>
+                <td>${fruit.category}</td>
+                <td>${fruit.stock}</td>
+
+                <td>
+
+                    <a href="/edit-fruit/${fruit.id}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+
+                    <a href="/delete-fruit/${fruit.id}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Are you sure you want to delete this fruit?')">
+
+                        <i class="fas fa-trash"></i> Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    document.getElementById("fruitTableBody").innerHTML = table;
+
+})
+.catch(error => {
+    console.log(error);
+});
+</script>
+
+{% endblock %}
