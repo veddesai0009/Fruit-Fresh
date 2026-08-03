@@ -1,7 +1,7 @@
 organization=veddesai0009
 projectKey=veddesai0009_Fruit-Fresh
 serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.99807
+serverVersion=8.0.0.99904
 dashboardUrl=https://sonarcloud.io/dashboard?id=veddesai0009_Fruit-Fresh
-ceTaskId=AZ-8J3nwUgfqnvz1neIu
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZ-8J3nwUgfqnvz1neIu
+ceTaskId=AZ_HItrP80pobPMdOl9S
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZ_HItrP80pobPMdOl9S
