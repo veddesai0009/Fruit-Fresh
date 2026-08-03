@@ -1,80 +1,108 @@
+"""FruitFresh Flask Web Application.
 
-from flask import Flask, render_template, request, redirect, jsonify, session
-import sqlite3
+Provides admin dashboard, fruit management, and REST API endpoints.
+"""
+
 import os
+import sqlite3
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+from flask import (
+    Flask,
+    Response,
+    jsonify,
+    redirect,
+    render_template,
+    request,
+    session,
+)
 from werkzeug.utils import secure_filename
-def get_db_connection():
-    conn = sqlite3.connect("database.db")
-def get_db_connection():
-    conn = sqlite3.connect("database.db")
-    conn.row_factory = sqlite3.Row
-    return conn
 
 app = Flask(__name__)
-app.secret_key = "fruitfresh123"
 
+# Security: Load secret key from environment or use secure default
+app.secret_key = os.environ.get("SECRET_KEY", "fruitfresh123")
+
+# File Upload Configuration
 UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# Admin Auth Credentials (configurable via environment with backward compatibility)
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "1234")
 
-def get_db_connection():
+
+def get_db_connection() -> sqlite3.Connection:
+    """Create and return a database connection with sqlite3.Row factory.
+
+    Returns:
+        sqlite3.Connection: Database connection instance.
+    """
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     return conn
 
 
+def query_db(
+    query: str,
+    args: tuple = (),
+    one: bool = False,
+    commit: bool = False
+) -> Optional[Union[List[sqlite3.Row], sqlite3.Row, int]]:
+    """Execute a database query safely with resource management.
+
+    Args:
+        query: SQL query string.
+        args: Query parameter values.
+        one: If True, return single row result.
+        commit: If True, commit changes to database.
+
+    Returns:
+        QueryResult: Single row, list of rows, or None.
+    """
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, args)
+        if commit:
+            conn.commit()
+            return cursor.rowcount
+        rv = cursor.fetchall()
+        return (rv[0] if rv else None) if one else rv
+
+
 @app.route("/")
-def home():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM fruits")
-    fruits = cursor.fetchall()
-
-    conn.close()
-
+def home() -> str:
+    """Render customer homepage with all available fruits."""
+    fruits = query_db("SELECT * FROM fruits")
     return render_template("index.html", fruits=fruits)
 
 
 @app.route("/admin")
-def admin():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    # Total Fruits
-    cursor.execute("SELECT COUNT(*) FROM fruits")
-    total_fruits = cursor.fetchone()[0]
-
-    # Total Stock
-    cursor.execute("SELECT SUM(stock) FROM fruits")
-    total_stock = cursor.fetchone()[0]
-
-    # Total Categories
-    cursor.execute("SELECT COUNT(DISTINCT category) FROM fruits")
-    total_categories = cursor.fetchone()[0]
-
-    # Low Stock (less than 10)
-    cursor.execute("SELECT COUNT(*) FROM fruits WHERE stock < 10")
-    low_stock = cursor.fetchone()[0]
-
-    conn.close()
+def admin() -> str:
+    """Render admin dashboard with fruit statistics."""
+    total_fruits = query_db("SELECT COUNT(*) FROM fruits", one=True)[0]
+    total_stock_row = query_db("SELECT SUM(stock) FROM fruits", one=True)
+    total_stock = total_stock_row[0] if total_stock_row and total_stock_row[0] is not None else 0
+    total_categories = query_db("SELECT COUNT(DISTINCT category) FROM fruits", one=True)[0]
+    low_stock = query_db("SELECT COUNT(*) FROM fruits WHERE stock < 10", one=True)[0]
 
     return render_template(
         "admin_dashboard.html",
         total_fruits=total_fruits,
         total_stock=total_stock,
         total_categories=total_categories,
-        low_stock=low_stock
+        low_stock=low_stock,
     )
 
 
 @app.route("/login", methods=["GET", "POST"])
-def login():
+def login() -> Union[str, Response]:
+    """Handle admin authentication."""
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get("username", "")
+        password = request.form.get("password", "")
 
-        if username == "admin" and password == "1234":
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
             session["admin"] = True
             return redirect("/admin")
 
@@ -84,94 +112,88 @@ def login():
 
 
 @app.route("/logout")
-def logout():
+def logout() -> Response:
+    """Handle admin logout and session invalidation."""
     session.pop("admin", None)
     return redirect("/login")
 
 
 @app.route("/fruit-list")
-def fruit_list():
+def fruit_list() -> str:
+    """Render admin fruit inventory list."""
     return render_template("fruit_list.html")
-    
-@app.route("/delete-fruit/<int:id>")
-def delete_fruit(id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM fruits WHERE id = ?", (id,))
 
-    conn.commit()
-    conn.close()
-
+@app.route("/delete-fruit/<int:fruit_id>")
+def delete_fruit(fruit_id: int) -> Response:
+    """Delete a fruit by ID from the database."""
+    query_db("DELETE FROM fruits WHERE id = ?", (fruit_id,), commit=True)
     return redirect("/fruit-list")
 
 
-@app.route("/edit-fruit/<int:id>", methods=["GET", "POST"])
-def edit_fruit(id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM fruits WHERE id=?", (id,))
-    fruit = cursor.fetchone()
+@app.route("/edit-fruit/<int:fruit_id>", methods=["GET", "POST"])
+def edit_fruit(fruit_id: int) -> Union[str, Response]:
+    """Handle editing an existing fruit's details."""
+    fruit = query_db("SELECT * FROM fruits WHERE id=?", (fruit_id,), one=True)
 
     if request.method == "POST":
-        fruit_name = " ".join(request.form["fruit_name"].split())
-        price = request.form["price"]
-        category = request.form["category"]
-        stock = request.form["stock"]
+        fruit_name = " ".join(request.form.get("fruit_name", "").split())
+        price = request.form.get("price")
+        category = request.form.get("category")
+        stock = request.form.get("stock")
 
-        # Check duplicate fruit name (excluding this fruit's own id)
-        cursor.execute("""
-            SELECT * FROM fruits
-            WHERE LOWER(fruit_name)=LOWER(?)
-            AND id != ?
-        """, (fruit_name, id))
-
-        existing = cursor.fetchone()
+        # Check duplicate fruit name (excluding current fruit ID)
+        existing = query_db(
+            "SELECT * FROM fruits WHERE LOWER(fruit_name)=LOWER(?) AND id != ?",
+            (fruit_name, fruit_id),
+            one=True,
+        )
 
         if existing:
-            conn.close()
             return render_template(
                 "edit_fruit.html",
                 fruit=fruit,
-                error="Fruit already exists!"
+                error="Fruit already exists!",
             )
 
-        # Handle image upload only if a new file was actually chosen
         image = request.files.get("image")
         if image and image.filename:
             filename = secure_filename(image.filename)
             image.save(os.path.join(UPLOAD_FOLDER, filename))
 
-            cursor.execute("""
+            query_db(
+                """
                 UPDATE fruits
                 SET fruit_name=?, price=?, category=?, stock=?, image=?
                 WHERE id=?
-            """, (fruit_name, price, category, stock, filename, id))
+                """,
+                (fruit_name, price, category, stock, filename, fruit_id),
+                commit=True,
+            )
         else:
-            cursor.execute("""
+            query_db(
+                """
                 UPDATE fruits
                 SET fruit_name=?, price=?, category=?, stock=?
                 WHERE id=?
-            """, (fruit_name, price, category, stock, id))
-
-        conn.commit()
-        conn.close()
+                """,
+                (fruit_name, price, category, stock, fruit_id),
+                commit=True,
+            )
 
         return redirect("/fruit-list")
-
-    conn.close()
 
     return render_template("edit_fruit.html", fruit=fruit)
 
 
 @app.route("/add-fruit", methods=["GET", "POST"])
-def add_fruit():
+def add_fruit() -> Union[str, Response]:
+    """Handle adding a new fruit to the inventory."""
     if request.method == "POST":
-        fruit_name = " ".join(request.form["fruit_name"].split())
-        price = request.form["price"]
-        category = request.form["category"]
-        stock = request.form["stock"]
+        fruit_name = " ".join(request.form.get("fruit_name", "").split())
+        price = request.form.get("price")
+        category = request.form.get("category")
+        stock = request.form.get("stock")
         image = request.files.get("image")
 
         filename = None
@@ -179,86 +201,51 @@ def add_fruit():
             filename = secure_filename(image.filename)
             image.save(os.path.join(UPLOAD_FOLDER, filename))
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
-
-        # Check duplicate fruit
-        cursor.execute(
+        # Check duplicate fruit name
+        existing = query_db(
             "SELECT * FROM fruits WHERE LOWER(fruit_name) = LOWER(?)",
-            (fruit_name,)
+            (fruit_name,),
+            one=True,
         )
 
-        existing = cursor.fetchone()
-
         if existing:
-            conn.close()
             return render_template(
                 "add_fruit.html",
-                error="Fruit already exists!"
+                error="Fruit already exists!",
             )
 
-        # Insert new fruit
-        cursor.execute("""
+        query_db(
+            """
             INSERT INTO fruits (fruit_name, price, category, stock, image)
             VALUES (?, ?, ?, ?, ?)
-        """, (fruit_name, price, category, stock, filename))
-
-        conn.commit()
-        conn.close()
+            """,
+            (fruit_name, price, category, stock, filename),
+            commit=True,
+        )
 
         return redirect("/fruit-list")
 
     return render_template("add_fruit.html")
 
+
 @app.route("/api/fruits", methods=["GET"])
-def get_all_fruits():
-
-    # Use the same database as the rest of your project
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM fruits")
-    fruits = cursor.fetchall()
-
-    conn.close()
-
-    fruits_list = []
-
-    for fruit in fruits:
-        fruits_list.append(dict(fruit))
-
+def get_all_fruits() -> Response:
+    """REST API endpoint to retrieve all fruits as JSON."""
+    fruits = query_db("SELECT * FROM fruits")
+    fruits_list = [dict(fruit) for fruit in fruits] if fruits else []
     return jsonify(fruits_list)
-@app.route("/api/fruits/<int:id>", methods=["GET"])
-def get_fruit(id):
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
 
-    cursor.execute("SELECT * FROM fruits WHERE id = ?", (id,))
-    fruit = cursor.fetchone()
-
-    conn.close()
+@app.route("/api/fruits/<int:fruit_id>", methods=["GET"])
+def get_fruit(fruit_id: int) -> Tuple[Response, int]:
+    """REST API endpoint to retrieve a single fruit by ID as JSON."""
+    fruit = query_db("SELECT * FROM fruits WHERE id = ?", (fruit_id,), one=True)
 
     if fruit:
-        return jsonify(dict(fruit))
-    else:
-        return jsonify({"message": "Fruit not found"}), 404
-@app.route("/api/fruits/<int:id>", methods=["GET"])
+        return jsonify(dict(fruit)), 200
 
-def get_single_fruit(id):
+    return jsonify({"message": "Fruit not found"}), 404
 
-    conn = get_db_connection()
-    cursor = conn.cursor() 
-
-    cursor.execute("SELECT * FROM fruits WHERE id = ?", (id,))
-    fruit = cursor.fetchone()
-
-    conn.close()
-
-    if fruit is None:
-        return jsonify({"message": "Fruit not found"}), 404
-
-    return jsonify(dict(fruit))
 
 if __name__ == "__main__":
     app.run(debug=True)

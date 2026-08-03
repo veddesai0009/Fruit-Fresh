@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>This is Mater blaster</title>
+    <title>FruitFresh - Fresh &amp; Organic Fruits</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons (icon font only — no JS) -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Google Fonts -->
@@ -20,342 +20,331 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg bg-light shadow-sm sticky-top">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="{{ url_for('static', filename='images/logo.jpg') }}" width="44" height="44" class="rounded-circle brand-logo" alt="FruitFresh Logo">
-      <span class="fw-bold text-success brand-name">FruitFresh</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav main-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#Categories">Categories</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#about-us">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact Us</a>
-        </li>
-      </ul>
-      <a href="#" class="btn btn-success cart-btn" aria-label="View cart">
-        <i class="bi bi-cart3"></i>
-      </a>
-    </div>
-  </div>
-</nav>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-light shadow-sm sticky-top" aria-label="Main Store Navigation">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+          <img src="{{ url_for('static', filename='images/logo.jpg') }}" width="44" height="44" class="rounded-circle brand-logo" alt="FruitFresh Logo">
+          <span class="fw-bold text-success brand-name">FruitFresh</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav main-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Categories">Categories</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about-us">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact Us</a>
+            </li>
+          </ul>
+          <a href="#" class="btn btn-success cart-btn" aria-label="View cart">
+            <i class="bi bi-cart3"></i>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
     <section id="home">
-    <div id="carouselExampleCaptions"
-     class="carousel slide hero-carousel"
-     data-bs-ride="carousel"
-     data-bs-interval="5000">
+      <div id="carouselExampleCaptions"
+           class="carousel slide hero-carousel"
+           data-bs-ride="carousel"
+           data-bs-interval="5000">
 
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-<img src="{{ url_for('static', filename='images/sliderone.jpg') }}" class="d-block w-100" alt="Fresh Fruits">      <div class="hero-overlay"></div>
-      <div class="carousel-caption hero-caption">
-        <span class="hero-eyebrow">Farm to Doorstep</span>
-        <h2>Healthy Living Starts Here</h2>
-        <p>Quality Fruits Delivered to Your Home</p>
-        <a href="#Categories" class="btn btn-success btn-lg hero-btn">Shop Now</a>
-      </div>
-    </div>
-    <div class="carousel-item">
-<img src="{{ url_for('static', filename='images/sliderthree.jpg') }}" class="d-block w-100" alt="Organic Fruits">      <div class="hero-overlay"></div>
-      <div class="carousel-caption hero-caption">
-        <span class="hero-eyebrow">100% Organic</span>
-        <h2>Fresh Fruits Every Day</h2>
-        <p>100% Organic • Farm Fresh • Fast Delivery</p>
-        <a href="#Categories" class="btn btn-success btn-lg hero-btn">Shop Now</a>
-      </div>
-    </div>
-    <div class="carousel-item">
-<img src="{{ url_for('static', filename='images/sliderteo.jpg') }}" class="d-block w-100" alt="Fruit Basket">      <div class="hero-overlay"></div>
-      <div class="carousel-caption hero-caption">
-         <span class="hero-eyebrow">Limited Time</span>
-         <h2>Seasonal Special Offers</h2>
-        <p>Up to 30% OFF on Premium Fruits</p>
-        <a href="#Categories" class="btn btn-success btn-lg hero-btn">Shop Now</a>
-      </div>
-    </div>
-  </div>
-  </div>
-</section>
-<section id="Categories" class="py-5 section-block">
-<div class="container">
-    <span class="section-eyebrow d-block text-center">Our Picks</span>
-    <h2 class="text-center fw-bold mb-3 section-title">🍎 Featured Fruits</h2>
-
-<p class="text-center text-muted mb-5 section-lead">
-    Fresh, Organic &amp; Healthy Fruits Delivered to Your Doorstep
-</p>
-
-    
-  <div class="row">
-
-{% for fruit in fruits %}
-
-<div class="col-lg-3 col-md-4 mb-4">
-
-    <div class="card h-100">
-
-        <img src="{{ url_for('static', filename='uploads/' + fruit['image']) }}"
-     class="card-img-top"
-     alt="{{ fruit['fruit_name'] }}">
-
-        <div class="card-body">
-<h5 class="card-title">{{ fruit["fruit_name"] }}</h5>
-
-<p class="text-success fw-bold">₹{{ fruit["price"] }}</p>
-
-<p>{{ fruit["category"] }}</p>
-
-<p>
-    <strong>Stock:</strong>
-    {{ fruit["stock"] }}
-</p>
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-
-    </div>
-
-</div>
-
-{% endfor %}
-
-</div>
-</div>
- 
-</div>
-</div>
-</div>
-</section>
-<section id="about-us" class="py-5 bg-white section-block">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <!-- Image on the left -->
-      <div class="col-md-6">
-<img src="{{ url_for('static', filename='images/au.jpg') }}"
-     alt="About Us"
-     class="img-fluid rounded-4 shadow about-img">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='images/sliderone.jpg') }}" class="d-block w-100" alt="Fresh Fruits Banner">
+            <div class="hero-overlay"></div>
+            <div class="carousel-caption hero-caption">
+              <span class="hero-eyebrow">Farm to Doorstep</span>
+              <h2>Healthy Living Starts Here</h2>
+              <p>Quality Fruits Delivered to Your Home</p>
+              <a href="#Categories" class="btn btn-success btn-lg hero-btn">Shop Now</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='images/sliderthree.jpg') }}" class="d-block w-100" alt="Organic Fruits Banner">
+            <div class="hero-overlay"></div>
+            <div class="carousel-caption hero-caption">
+              <span class="hero-eyebrow">100% Organic</span>
+              <h2>Fresh Fruits Every Day</h2>
+              <p>100% Organic &bull; Farm Fresh &bull; Fast Delivery</p>
+              <a href="#Categories" class="btn btn-success btn-lg hero-btn">Shop Now</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='images/sliderteo.jpg') }}" class="d-block w-100" alt="Fruit Basket Special Offer Banner">
+            <div class="hero-overlay"></div>
+            <div class="carousel-caption hero-caption">
+               <span class="hero-eyebrow">Limited Time</span>
+               <h2>Seasonal Special Offers</h2>
+              <p>Up to 30% OFF on Premium Fruits</p>
+              <a href="#Categories" class="btn btn-success btn-lg hero-btn">Shop Now</a>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <!-- Text on the right -->
-      <div class="col-md-6">
-        <span class="section-eyebrow d-block">Our Story</span>
-        <h2 class="fw-bold mb-3 section-title">About FruitFresh</h2>
-        <p class="text-muted fs-5 mb-4">
-          At FruitFresh, we are passionate about delivering nature's finest 
-          fruits straight to your doorstep. We partner with local organic 
-          farms to bring you fruits that are fresh, chemical-free, and 
-          bursting with natural flavor. Our mission is simple — healthy 
-          eating made easy and delicious for every family.
+    <section id="Categories" class="py-5 section-block">
+      <div class="container">
+        <span class="section-eyebrow d-block text-center">Our Picks</span>
+        <h2 class="text-center fw-bold mb-3 section-title">&#127822; Featured Fruits</h2>
+
+        <p class="text-center text-muted mb-5 section-lead">
+            Fresh, Organic &amp; Healthy Fruits Delivered to Your Doorstep
         </p>
-        <a href="#" class="btn btn-success btn-lg px-4">Learn More</a>
+
+        <div class="row">
+          {% for fruit in fruits %}
+          <div class="col-lg-3 col-md-4 mb-4">
+              <div class="card h-100">
+                  {% if fruit["image"] %}
+                  <img src="{{ url_for('static', filename='uploads/' + fruit['image']) }}"
+                       class="card-img-top"
+                       alt="{{ fruit['fruit_name'] }}">
+                  {% else %}
+                  <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+                       class="card-img-top"
+                       alt="{{ fruit['fruit_name'] }}">
+                  {% endif %}
+
+                  <div class="card-body">
+                      <h3 class="card-title h5">{{ fruit["fruit_name"] }}</h3>
+                      <p class="text-success fw-bold">&sharp;{{ fruit["price"] }}</p>
+                      <p class="text-muted mb-2">{{ fruit["category"] }}</p>
+                      <p class="mb-0">
+                          <strong>Stock:</strong> {{ fruit["stock"] }}
+                      </p>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-<section id="testimonials" class="py-5 bg-white section-block">
-  <div class="container">
-    <span class="section-eyebrow d-block text-center">Testimonials</span>
-    <h2 class="text-center fw-bold mb-3 section-title">What Our Customers Say</h2>
-    <p class="text-center text-muted mb-5 section-lead">
-Hear from our happy customers who trust FruitFresh for fresh, organic fruits.
-</p>
+    </section>
 
-    <div class="row g-4 justify-content-center">
+    <section id="about-us" class="py-5 bg-white section-block">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <!-- Image on the left -->
+          <div class="col-md-6">
+            <img src="{{ url_for('static', filename='images/au.jpg') }}"
+                 alt="About FruitFresh"
+                 class="img-fluid rounded-4 shadow about-img">
+          </div>
 
-      <!-- Testimonial 1 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100 border-0 shadow rounded-4 text-center p-4">
-          <div class="card-body d-flex flex-column align-items-center">
-<img src="{{ url_for('static', filename='images/cone.jpg') }}"                 alt="Customer" 
-                 class="rounded-circle mb-3 testimonial-avatar" 
-                 style="width: 80px; height: 80px; object-fit: cover;">
-            <h5 class="fw-bold mb-1">ved</h5>
-            <div class="text-warning mb-3">★★★★★</div>
-            <p class="text-muted mb-0">
-              "The fruits are always fresh and juicy! Delivery was super fast, 
-              and the quality is better than my local supermarket."
+          <!-- Text on the right -->
+          <div class="col-md-6">
+            <span class="section-eyebrow d-block">Our Story</span>
+            <h2 class="fw-bold mb-3 section-title">About FruitFresh</h2>
+            <p class="text-muted fs-5 mb-4">
+              At FruitFresh, we are passionate about delivering nature's finest 
+              fruits straight to your doorstep. We partner with local organic 
+              farms to bring you fruits that are fresh, chemical-free, and 
+              bursting with natural flavor. Our mission is simple &mdash; healthy 
+              eating made easy and delicious for every family.
             </p>
+            <a href="#Categories" class="btn btn-success btn-lg px-4">Learn More</a>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Testimonial 2 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100 border-0 shadow rounded-4 text-center p-4">
-          <div class="card-body d-flex flex-column align-items-center">
-<img src="{{ url_for('static', filename='images/ctwo.jpg') }}"                 alt="Customer" 
-                 class="rounded-circle mb-3 testimonial-avatar" 
-                 style="width: 80px; height: 80px; object-fit: cover;">
-            <h5 class="fw-bold mb-1">PM</h5>
-            <div class="text-warning mb-3">★★★★★</div>
-            <p class="text-muted mb-0">
-              "FruitFresh has become my go-to for organic fruits. Everything 
-              arrives perfectly ripe and packaged with care."
-            </p>
-          </div>
-        </div>
-      </div>
+    <section id="testimonials" class="py-5 bg-white section-block">
+      <div class="container">
+        <span class="section-eyebrow d-block text-center">Testimonials</span>
+        <h2 class="text-center fw-bold mb-3 section-title">What Our Customers Say</h2>
+        <p class="text-center text-muted mb-5 section-lead">
+          Hear from our happy customers who trust FruitFresh for fresh, organic fruits.
+        </p>
 
-      <!-- Testimonial 3 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card h-100 border-0 shadow rounded-4 text-center p-4">
-          <div class="card-body d-flex flex-column align-items-center">
-<img src="{{ url_for('static', filename='images/cthree.jpg') }}"                 alt="Customer" 
-                 class="rounded-circle mb-3 testimonial-avatar" 
-                 style="width: 80px; height: 80px; object-fit: cover;">
-            <h5 class="fw-bold mb-1">MG</h5>
-            <div class="text-warning mb-3">★★★★★</div>
-            <p class="text-muted mb-0">
-              "Amazing service! I ordered in the morning and my fruits were 
-              delivered the same day, fresh and beautifully packed."
-            </p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-<section id="contact" class="py-5 contact-section section-block">
-  <div class="container">
-    <span class="section-eyebrow d-block text-center">Get In Touch</span>
-    <h2 class="text-center fw-bold mb-3 section-title">Contact Us</h2>
-    <p class="text-center text-muted mb-5 contact-lead">
-      Have a question or need assistance? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
-    </p>
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-8">
-        <div class="contact-card p-4 p-md-5">
-          <form action="#">
-            <div class="row g-4">
-              <div class="col-12 col-md-6">
-                <label for="contactName" class="form-label fw-semibold">Full Name</label>
-                <input type="text" class="form-control" id="contactName" placeholder="Enter your full name" required>
-              </div>
-              <div class="col-12 col-md-6">
-    <label for="contactEmail" class="form-label fw-semibold">Email Address</label>
-    <input
-        type="email"
-        class="form-control"
-        id="contactEmail"
-        placeholder="Enter your email address"
-        required
-    >
-</div>
-              <div class="col-12 col-md-6">
-                <label for="contactMobile" class="form-label fw-semibold">Mobile Number</label>
-                <input type="tel" class="form-control" id="contactMobile" placeholder="Enter your mobile number" required>
-              </div>
-              <div class="col-12">
-                <label for="contactMessage" class="form-label fw-semibold">Message</label>
-                <textarea class="form-control" id="contactMessage" rows="5" placeholder="Write your message here..." required></textarea>
-              </div>
-              <div class="col-12 text-center">
-                <button type="submit" class="btn btn-success btn-lg contact-btn mt-2">Send Message</button>
+        <div class="row g-4 justify-content-center">
+          <!-- Testimonial 1 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow rounded-4 text-center p-4">
+              <div class="card-body d-flex flex-column align-items-center">
+                <img src="{{ url_for('static', filename='images/cone.jpg') }}"
+                     alt="Customer Ved" 
+                     class="rounded-circle mb-3 testimonial-avatar" 
+                     style="width: 80px; height: 80px; object-fit: cover;">
+                <h3 class="fw-bold mb-1 h5">Ved</h3>
+                <div class="text-warning mb-3" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="text-muted mb-0">
+                  "The fruits are always fresh and juicy! Delivery was super fast, 
+                  and the quality is better than my local supermarket."
+                </p>
               </div>
             </div>
-          </form>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow rounded-4 text-center p-4">
+              <div class="card-body d-flex flex-column align-items-center">
+                <img src="{{ url_for('static', filename='images/ctwo.jpg') }}"
+                     alt="Customer PM" 
+                     class="rounded-circle mb-3 testimonial-avatar" 
+                     style="width: 80px; height: 80px; object-fit: cover;">
+                <h3 class="fw-bold mb-1 h5">PM</h3>
+                <div class="text-warning mb-3" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="text-muted mb-0">
+                  "FruitFresh has become my go-to for organic fruits. Everything 
+                  arrives perfectly ripe and packaged with care."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow rounded-4 text-center p-4">
+              <div class="card-body d-flex flex-column align-items-center">
+                <img src="{{ url_for('static', filename='images/cthree.jpg') }}"
+                     alt="Customer MG" 
+                     class="rounded-circle mb-3 testimonial-avatar" 
+                     style="width: 80px; height: 80px; object-fit: cover;">
+                <h3 class="fw-bold mb-1 h5">MG</h3>
+                <div class="text-warning mb-3" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="text-muted mb-0">
+                  "Amazing service! I ordered in the morning and my fruits were 
+                  delivered the same day, fresh and beautifully packed."
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<footer class="text-white pt-5 pb-4 site-footer">
-  <div class="container">
-    <div class="row g-4">
-
-      <!-- Column 1: Logo & Description -->
-      <div class="col-12 col-md-4">
-        <div class="d-flex align-items-center mb-3">
-<img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="FruitFresh Logo" width="45" height="45" class="rounded-circle me-2"></div>
-        <p class="text-white-50 mb-3">
-          Fresh, organic, and healthy fruits delivered to your doorstep.
+    <section id="contact" class="py-5 contact-section section-block">
+      <div class="container">
+        <span class="section-eyebrow d-block text-center">Get In Touch</span>
+        <h2 class="text-center fw-bold mb-3 section-title">Contact Us</h2>
+        <p class="text-center text-muted mb-5 contact-lead">
+          Have a question or need assistance? We'd love to hear from you. Fill out the form below and we'll get back to you as soon as possible.
         </p>
-        <div class="social-icons">
-          <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="social-icon" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-8">
+            <div class="contact-card p-4 p-md-5">
+              <form action="#" method="POST">
+                <div class="row g-4">
+                  <div class="col-12 col-md-6">
+                    <label for="contactName" class="form-label fw-semibold">Full Name</label>
+                    <input type="text" class="form-control" id="contactName" placeholder="Enter your full name" required>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="contactEmail" class="form-label fw-semibold">Email Address</label>
+                    <input type="email" class="form-control" id="contactEmail" placeholder="Enter your email address" required>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label for="contactMobile" class="form-label fw-semibold">Mobile Number</label>
+                    <input type="tel" class="form-control" id="contactMobile" placeholder="Enter your mobile number" required>
+                  </div>
+                  <div class="col-12">
+                    <label for="contactMessage" class="form-label fw-semibold">Message</label>
+                    <textarea class="form-control" id="contactMessage" rows="5" placeholder="Write your message here..." required></textarea>
+                  </div>
+                  <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success btn-lg contact-btn mt-2">Send Message</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-white pt-5 pb-4 site-footer">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Column 1: Logo & Description -->
+        <div class="col-12 col-md-4">
+          <div class="d-flex align-items-center mb-3">
+            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="FruitFresh Logo" width="45" height="45" class="rounded-circle me-2">
+            <span class="fw-bold fs-4 text-white">FruitFresh</span>
+          </div>
+          <p class="text-white-50 mb-3">
+            Fresh, organic, and healthy fruits delivered to your doorstep.
+          </p>
+          <div class="social-icons">
+            <a href="#" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-icon" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" class="social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="col-12 col-md-4">
+          <h3 class="h5 fw-bold mb-3">Quick Links</h3>
+          <ul class="list-unstyled footer-links">
+            <li class="mb-2">
+              <a href="#home" class="text-white-50 text-decoration-none">Home</a>
+            </li>
+            <li class="mb-2">
+              <a href="#Categories" class="text-white-50 text-decoration-none">Categories</a>
+            </li>
+            <li class="mb-2">
+              <a href="#about-us" class="text-white-50 text-decoration-none">About Us</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Contact Info -->
+        <div class="col-12 col-md-4">
+          <h3 class="h5 fw-bold mb-3">Contact Info</h3>
+          <ul class="list-unstyled text-white-50 footer-contact">
+            <li class="mb-2"><i class="bi bi-envelope-fill me-2"></i>support@fruitfresh.com</li>
+            <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+91 98765 43210</li>
+            <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Bhavnagar, Gujarat</li>
+          </ul>
         </div>
       </div>
 
-      <!-- Column 2: Quick Links -->
-      <div class="col-12 col-md-4">
-        <h5 class="fw-bold mb-3">Quick Links</h5>
-        <ul class="list-unstyled footer-links">
-    <li class="mb-2">
-        <a href="#home" class="text-white-50 text-decoration-none">Home</a>
-    </li>
+      <hr class="border-secondary mt-4 mb-3">
 
-    <li class="mb-2">
-        <a href="#Categories" class="text-white-50 text-decoration-none">Categories</a>
-    </li>
-
-    <li class="mb-2">
-        <a href="#about-us" class="text-white-50 text-decoration-none">About Us</a>
-    </li>
-</ul>
+      <div class="text-center text-white-50">
+        &copy; 2026 FruitFresh. All Rights Reserved.
       </div>
-
-      <!-- Column 3: Contact Info -->
-      <div class="col-12 col-md-4">
-        <h5 class="fw-bold mb-3">Contact Info</h5>
-        <ul class="list-unstyled text-white-50 footer-contact">
-          <li class="mb-2"><i class="bi bi-envelope-fill me-2"></i>support@fruitfresh.com</li>
-          <li class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+91 98765 43210</li>
-          <li class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Bhavnagar, Gujarat</li>
-        </ul>
-      </div>
-
     </div>
+  </footer>
 
-    <hr class="border-secondary mt-4 mb-3">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
+          const href = this.getAttribute("href");
+          if (!href || href === "#") return;
 
-    <div class="text-center text-white-50">
-      &copy; 2026 FruitFresh. All Rights Reserved.
-    </div>
-  </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-
-        const href = this.getAttribute("href");
-
-        // Ignore invalid hashes
-        if (href === "#") return;
-
-        e.preventDefault();
-
-        const target = document.querySelector(href);
-
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
-
-            // Remove #home, #contact, etc. from the URL
-            history.replaceState(null, null, window.location.pathname);
-        }
-    })
-});
-</script>
+          try {
+              const target = document.querySelector(href);
+              if (target) {
+                  e.preventDefault();
+                  target.scrollIntoView({ behavior: "smooth" });
+                  history.replaceState(null, null, window.location.pathname);
+              }
+          } catch (err) {
+              // Ignore invalid selector
+          }
+      });
+  });
+  </script>
 </body>
 </html>

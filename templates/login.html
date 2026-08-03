@@ -1,73 +1,70 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>Admin Login</title>
-
-    <link rel="stylesheet"
-        href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FruitFresh - Admin Login</title>
 
     <link rel="stylesheet"
-        href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
-
+          href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
 </head>
-
 <body class="hold-transition login-page">
-
-<div class="login-box">
-
+<main class="login-box">
     <div class="login-logo">
         <b>FruitFresh</b> Admin
     </div>
 
     <div class="card">
-
         <div class="card-body login-card-body">
-
-            <p class="login-box-msg">
-
-                Sign in to start your session
-
-            </p>
+            <p class="login-box-msg">Sign in to start your session</p>
 
             <form method="POST">
-
                 <div class="input-group mb-3">
-
+                    <label for="usernameInput" class="sr-only">Username</label>
                     <input
                         type="text"
                         class="form-control"
+                        id="usernameInput"
                         placeholder="Username"
-                        name="username">
-
+                        name="username"
+                        required
+                        autocomplete="username">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="input-group mb-3">
-
+                    <label for="passwordInput" class="sr-only">Password</label>
                     <input
                         type="password"
                         class="form-control"
+                        id="passwordInput"
                         placeholder="Password"
-                        name="password">
-
+                        name="password"
+                        required
+                        autocomplete="current-password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
                 </div>
 
-                <button
-                    class="btn btn-success btn-block">
-
-                    Login
-
-                </button>
-
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-success btn-block">
+                            Login
+                        </button>
+                    </div>
+                </div>
             </form>
-
         </div>
-
     </div>
-
-</div>
-
+</main>
 </body>
-
 </html>

@@ -3,116 +3,117 @@
 {% block content %}
 
 <div class="card card-success">
-
     <div class="card-header">
-        <h3 class="card-title">Add New Fruit</h3>
+        <h2 class="card-title h5 mb-0">Add New Fruit</h2>
     </div>
 
     <form method="POST" enctype="multipart/form-data">
-
         <div class="card-body">
-
             {% if error %}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" role="alert">
                 {{ error }}
             </div>
             {% endif %}
 
-            
-             <!-- Fruit Name -->
+            <!-- Fruit Name -->
             <div class="form-group">
-                <label>Fruit Name</label>
-
-               <input
-    type="text"
-    class="form-control"
-    name="fruit_name"
-    
-    placeholder="Enter Fruit Name"
-    required
-    minlength="2"
-    maxlength="30"
-    pattern="^[A-Za-z]+( [A-Za-z]+)*$"
-    title="Only letters are allowed, with a single space between words. Multiple or leading/trailing spaces are not allowed."
-    oninput="
-        this.value = this.value
-        .replace(/[^A-Za-z ]/g,'')
-        .replace(/\s{2,}/g,' ')
-        .replace(/^\s/g,'');
-    ">
+                <label for="fruitName">Fruit Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="fruitName"
+                    name="fruit_name"
+                    placeholder="Enter Fruit Name"
+                    required
+                    minlength="2"
+                    maxlength="30"
+                    pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+                    title="Only letters are allowed, with a single space between words. Multiple or leading/trailing spaces are not allowed."
+                >
             </div>
+
             <!-- Price -->
             <div class="form-group">
-                <label>Price</label>
-
+                <label for="price">Price</label>
                 <input
                     type="number"
                     class="form-control"
+                    id="price"
                     name="price"
                     placeholder="Enter Price"
                     min="1"
                     step="1"
-                    required>
+                    required
+                >
             </div>
 
             <!-- Category -->
             <div class="form-group">
-                <label>Category</label>
-
+                <label for="category">Category</label>
                 <select
                     class="form-control"
+                    id="category"
                     name="category"
-                    required>
-
+                    required
+                >
                     <option value="">Select Category</option>
                     <option value="Fresh Fruits">Fresh Fruits</option>
                     <option value="Seasonal">Seasonal</option>
-
                 </select>
             </div>
 
             <!-- Stock -->
             <div class="form-group">
-                <label>Stock</label>
-
+                <label for="stock">Stock</label>
                 <input
                     type="number"
                     class="form-control"
+                    id="stock"
                     name="stock"
                     placeholder="Enter Stock"
                     min="0"
                     step="1"
-                    required>
+                    required
+                >
             </div>
 
             <!-- Fruit Image -->
             <div class="form-group">
-                <label>Fruit Image</label>
-
+                <label for="image">Fruit Image</label>
                 <input
                     type="file"
                     class="form-control"
+                    id="image"
                     name="image"
                     accept=".jpg,.jpeg,.png,.webp"
-                    required>
+                    required
+                >
             </div>
-
         </div>
 
         <div class="card-footer">
-
             <button type="submit" class="btn btn-success">
                 Save Fruit
             </button>
-
             <a href="/fruit-list" class="btn btn-secondary">
                 Cancel
             </a>
-
         </div>
-
     </form>
-
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const fruitInput = document.getElementById("fruitName");
+    if (fruitInput) {
+        fruitInput.addEventListener("input", function () {
+            this.value = this.value
+                .replace(/[^A-Za-z ]/g, '')
+                .replace(/\s{2,}/g, ' ')
+                .replace(/^\s/g, '');
+        });
+    }
+});
+</script>
 
 {% endblock %}

@@ -3,89 +3,106 @@
 {% block content %}
 
 <div class="container-fluid">
-
     <div class="card">
-
         <div class="card-header">
-            <h3 class="card-title">
+            <h2 class="card-title h5 mb-0">
                 Fruit List
-            </h3>
-
+            </h2>
             <a href="/add-fruit" class="btn btn-success float-right">
-                <i class="fas fa-plus"></i> Add Fruit
+                <i class="fas fa-plus" aria-hidden="true"></i> Add Fruit
             </a>
         </div>
 
         <div class="card-body p-0">
-
-            <table class="table table-bordered table-striped mb-0">
-
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Fruit Name</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th width="180">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody id="fruitTableBody">
-
-                </tbody>
-
-            </table>
-
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fruit Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th style="width: 180px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fruitTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center py-3 text-muted">Loading fruits...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
     </div>
-
 </div>
 
 <script>
-fetch("/api/fruits")
-.then(response => response.json())
-.then(fruits => {
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-    let table = "";
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/api/fruits")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(fruits => {
+            const tableBody = document.getElementById("fruitTableBody");
+            if (!tableBody) return;
 
-    fruits.forEach(fruit => {
+            if (!fruits || fruits.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-3 text-muted">No fruits available.</td></tr>';
+                return;
+            }
 
-        table += `
-            <tr>
-                <td>${fruit.id}</td>
-                <td>${fruit.fruit_name}</td>
-                <td>₹${fruit.price}</td>
-                <td>${fruit.category}</td>
-                <td>${fruit.stock}</td>
+            let tableHtml = "";
+            fruits.forEach(fruit => {
+                const id = escapeHtml(fruit.id);
+                const name = escapeHtml(fruit.fruit_name);
+                const price = escapeHtml(fruit.price);
+                const category = escapeHtml(fruit.category);
+                const stock = escapeHtml(fruit.stock);
 
-                <td>
+                tableHtml += `
+                    <tr>
+                        <td>${id}</td>
+                        <td>${name}</td>
+                        <td>&#8377;${price}</td>
+                        <td>${category}</td>
+                        <td>${stock}</td>
+                        <td>
+                            <a href="/edit-fruit/${id}" class="btn btn-sm btn-primary">
+                                <i class="fas fa-edit" aria-hidden="true"></i> Edit
+                            </a>
+                            <a href="/delete-fruit/${id}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this fruit?')">
+                                <i class="fas fa-trash" aria-hidden="true"></i> Delete
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            });
 
-                    <a href="/edit-fruit/${fruit.id}" class="btn btn-sm btn-primary">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
-
-                    <a href="/delete-fruit/${fruit.id}"
-                       class="btn btn-sm btn-danger"
-                       onclick="return confirm('Are you sure you want to delete this fruit?')">
-
-                        <i class="fas fa-trash"></i> Delete
-
-                    </a>
-
-                </td>
-
-            </tr>
-        `;
-
-    });
-
-    document.getElementById("fruitTableBody").innerHTML = table;
-
-})
-.catch(error => {
-    console.log(error);
+            tableBody.innerHTML = tableHtml;
+        })
+        .catch(error => {
+            console.error("Error fetching fruits:", error);
+            const tableBody = document.getElementById("fruitTableBody");
+            if (tableBody) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center py-3 text-danger">Failed to load fruits.</td></tr>';
+            }
+        });
 });
 </script>
 

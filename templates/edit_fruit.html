@@ -3,144 +3,139 @@
 {% block content %}
 
 <div class="card card-primary">
-
     <div class="card-header">
-        <h3 class="card-title">Edit Fruit</h3>
+        <h2 class="card-title h5 mb-0">Edit Fruit</h2>
     </div>
 
     <form method="POST" enctype="multipart/form-data">
-
         <div class="card-body">
-
             {% if error %}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" role="alert">
                 {{ error }}
             </div>
             {% endif %}
 
             <!-- Fruit Name -->
             <div class="form-group">
-                <label>Fruit Name</label>
-
-               <input
-    type="text"
-    class="form-control"
-    name="fruit_name"
-    value="{{ fruit['fruit_name'] if fruit else '' }}"
-    placeholder="Enter Fruit Name"
-    required
-    minlength="2"
-    maxlength="30"
-    pattern="^[A-Za-z]+( [A-Za-z]+)*$"
-    title="Only letters are allowed, with a single space between words. Multiple or leading/trailing spaces are not allowed."
-    oninput="
-        this.value = this.value
-        .replace(/[^A-Za-z ]/g,'')
-        .replace(/\s{2,}/g,' ')
-        .replace(/^\s/g,'');
-    ">
+                <label for="editFruitName">Fruit Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="editFruitName"
+                    name="fruit_name"
+                    value="{{ fruit['fruit_name'] if fruit else '' }}"
+                    placeholder="Enter Fruit Name"
+                    required
+                    minlength="2"
+                    maxlength="30"
+                    pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+                    title="Only letters are allowed, with a single space between words."
+                >
             </div>
 
             <!-- Price -->
             <div class="form-group">
-                <label>Price</label>
-
+                <label for="editPrice">Price</label>
                 <input
                     type="number"
                     class="form-control"
+                    id="editPrice"
                     name="price"
-                    value="{{ fruit['price'] }}"
+                    value="{{ fruit['price'] if fruit else '' }}"
                     min="1"
                     step="1"
-                    required>
+                    required
+                >
             </div>
 
             <!-- Category -->
             <div class="form-group">
-                <label>Category</label>
-
+                <label for="editCategory">Category</label>
                 <select
                     class="form-control"
+                    id="editCategory"
                     name="category"
-                    required>
-
+                    required
+                >
                     <option value="Fresh Fruits"
-                        {% if fruit['category']=="Fresh Fruits" %}selected{% endif %}>
+                        {% if fruit and fruit['category'] == "Fresh Fruits" %}selected{% endif %}>
                         Fresh Fruits
                     </option>
-
                     <option value="Seasonal"
-                        {% if fruit['category']=="Seasonal" %}selected{% endif %}>
+                        {% if fruit and fruit['category'] == "Seasonal" %}selected{% endif %}>
                         Seasonal
                     </option>
-
                 </select>
             </div>
 
             <!-- Stock -->
             <div class="form-group">
-                <label>Stock</label>
-
+                <label for="editStock">Stock</label>
                 <input
                     type="number"
                     class="form-control"
+                    id="editStock"
                     name="stock"
-                    value="{{ fruit['stock'] }}"
+                    value="{{ fruit['stock'] if fruit else '' }}"
                     min="0"
                     step="1"
-                    required>
+                    required
+                >
             </div>
 
             <!-- Current Image -->
             <div class="form-group">
-
                 <label>Current Image</label>
-
                 <br>
-
-                {% if fruit["image"] %}
+                {% if fruit and fruit["image"] %}
                     <img src="{{ url_for('static', filename='uploads/' + fruit['image']) }}"
+                         alt="Current fruit image"
                          width="120"
                          class="img-thumbnail mb-3">
                 {% else %}
                     <p class="text-muted">No image uploaded.</p>
                 {% endif %}
-
             </div>
 
             <!-- Upload New Image -->
             <div class="form-group">
-
-                <label>Change Image (Optional)</label>
-
+                <label for="editImage">Change Image (Optional)</label>
                 <input
                     type="file"
                     class="form-control"
+                    id="editImage"
                     name="image"
-                    accept=".jpg,.jpeg,.png,.webp">
-
-                <small class="text-muted">
+                    accept=".jpg,.jpeg,.png,.webp"
+                >
+                <small class="form-text text-muted">
                     Leave empty if you don't want to change the image.
                 </small>
-
             </div>
-
         </div>
 
         <div class="card-footer">
-
             <button type="submit" class="btn btn-primary">
                 Update Fruit
             </button>
-
             <a href="/fruit-list" class="btn btn-secondary">
                 Cancel
             </a>
-
         </div>
-
     </form>
-
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const editFruitInput = document.getElementById("editFruitName");
+    if (editFruitInput) {
+        editFruitInput.addEventListener("input", function () {
+            this.value = this.value
+                .replace(/[^A-Za-z ]/g, '')
+                .replace(/\s{2,}/g, ' ')
+                .replace(/^\s/g, '');
+        });
+    }
+});
+</script>
 
 {% endblock %}

@@ -1,29 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
+  <title>FruitFresh Admin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bbootstrap 4 -->
-  <!-- iCheck -->
-  
   <!-- JQVMap -->
-  <link rel="stylesheet"
-href="{{ url_for('static', filename='plugins/jqvmap/jqvmap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/jqvmap/jqvmap.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
-  <!-- overlayScrollbars -->
-  
-  <!-- Daterange picker -->
-  
-  <!-- summernote -->
-  
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -31,182 +21,122 @@ href="{{ url_for('static', filename='plugins/jqvmap/jqvmap.min.css') }}">
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" aria-label="Main Header Navbar">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button" aria-label="Toggle navigation menu">
+          <i class="fas fa-bars"></i>
+        </a>
       </li>
-      
     </ul>
-
-    <!-- SEARCH FORM -->
-    
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-
-    <li class="nav-item dropdown">
-
-        <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="fas fa-user-circle"></i>
-            <span class="ml-1">Admin</span>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false" aria-label="Admin User Menu">
+          <i class="fas fa-user-circle"></i>
+          <span class="ml-1">Admin</span>
         </a>
-
         <div class="dropdown-menu dropdown-menu-right">
-
-            <a href="/edit-profile" class="dropdown-item">
-                <i class="fas fa-user-edit mr-2"></i>
-                Edit Profile
-            </a>
-
-            <div class="dropdown-divider"></div>
-
-            <a href="/logout" class="dropdown-item text-danger">
-                <i class="fas fa-sign-out-alt mr-2"></i>
-                Logout
-            </a>
-
+          <a href="/logout" class="dropdown-item text-danger">
+            <i class="fas fa-sign-out-alt mr-2"></i> Logout
+          </a>
         </div>
-
-    </li>
-
-</ul>
+      </li>
+    </ul>
   </nav>
-  <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <!-- Brand Logo -->
-<a href="/admin" class="brand-link">
-  <img src="{{ url_for('static', filename='images/logo.jpg') }}"
-       alt="FruitFresh Logo"
-       class="brand-image img-circle elevation-3"
-       style="opacity: .8">
+    <a href="/admin" class="brand-link">
+      <img src="{{ url_for('static', filename='images/logo.jpg') }}"
+           alt="FruitFresh Admin Logo"
+           class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">FruitFresh Admin</span>
+    </a>
 
-  <span class="brand-text font-weight-light">
-      FruitFresh Admin
-  </span>
-</a>
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
+      <!-- Sidebar user panel -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
           <img src="{{ url_for('static', filename='images/cone.jpg') }}"
-     class="img-circle elevation-3"
-     alt="Admin"
-     style="width:55px;height:55px;object-fit:cover;border:3px solid #28a745;">
+               class="img-circle elevation-3"
+               alt="Administrator Profile Picture"
+               style="width:55px;height:55px;object-fit:cover;border:3px solid #28a745;">
         </div>
         <div class="info">
-    <span class="d-block font-weight-bold text-white">
-        Ved Desai
-    </span>
-    <small class="text-muted">Administrator</small>
-</div>
+          <span class="d-block font-weight-bold text-white">Ved Desai</span>
+          <small class="text-muted">Administrator</small>
+        </div>
       </div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="mt-2" aria-label="Sidebar Menu">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
-    <li class="nav-item">
-        <a href="/admin" class="nav-link {% if request.path == '/admin' %}active{% endif %}">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>Dashboard</p>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a href="/fruit-list" class="nav-link {% if request.path == '/fruit-list' %}active{% endif %}">
-            <i class="nav-icon fas fa-apple-alt"></i>
-            <p>Fruit List</p>
-        </a>
-    </li>
-
-    
-    <li class="nav-item">
-        <a href="/logout" class="nav-link {% if request.path == '/logout' %}active{% endif %}">
-            <i class="nav-icon fas fa-sign-out-alt"></i>
-            <p>Logout</p>
-        </a>
-    </li>
-
-</ul>
+          <li class="nav-item">
+            <a href="/admin" class="nav-link {% if request.path == '/admin' %}active{% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/fruit-list" class="nav-link {% if request.path == '/fruit-list' %}active{% endif %}">
+              <i class="nav-icon fas fa-apple-alt"></i>
+              <p>Fruit List</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link {% if request.path == '/logout' %}active{% endif %}">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Logout</p>
+            </a>
+          </li>
+        </ul>
       </nav>
-      <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Dashboard</h1>
-          </div><!-- /.col -->
+          </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+          </div>
+        </div>
+      </div>
     </div> 
-    <section class="content">
-         {% block content %}
-         {% endblock %}
-    </section>
-    </div>
-  <!-- /.content-wrapper -->
+
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
+    <strong>Copyright &copy; 2026 FruitFresh.</strong> All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.5
+      <b>Version</b> 1.0.0
     </div>
   </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="{{ url_for('static', filename='plugins/jquery/jquery.min.js') }}"></script>
-<!-- jQuery UI 1.11.4 -->
-
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-
 <!-- Bootstrap 4 -->
 <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- ChartJS -->
-
-<!-- Sparkline -->
-<!-- JQVMap -->
-
-
-<!-- jQuery Knob Chart -->
-
-<!-- daterangepicker -->
-
-<!-- Tempusdominus Bootstrap 4 -->
-
-<!-- Summernote -->
-
-<!-- overlayScrollbars -->
-
 <!-- AdminLTE App -->
 <script src="{{ url_for('static', filename='dist/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 
 </body>
 </html>

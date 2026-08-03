@@ -4,7 +4,7 @@
    ========================================= */
 
 :root {
-  /* Core palette — one consistent green family */
+  /* Core palette — consistent green family */
   --brand-green: #1f8b4c;       /* primary action green */
   --brand-green-dark: #14532d;  /* hover / pressed state */
   --brand-green-darker: #0f3d22;/* footer background */
@@ -207,7 +207,7 @@ p {
   display: inline-block;
   background-color: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.55);
-  color: #fff;
+  color: #ffffff;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 1.2px;
